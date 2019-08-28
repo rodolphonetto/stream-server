@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const messageSchema = new Schema({
   message: {
@@ -11,6 +11,6 @@ const messageSchema = new Schema({
     type: Date,
     default: Date.now
   }
-});
+})
 
-module.exports = mongoose.model("Message", messageSchema);
+module.exports = mongoose.model('Message', messageSchema)
