@@ -1,8 +1,9 @@
 const Message = require('../../models/message')
 
 const addMessage = (req, res) => {
-  const message = {}
-  if (req.body.message) message.message = req.body.message
+  const message = {
+    message: req.body.message
+  }
 
   new Message(message)
     .save()
