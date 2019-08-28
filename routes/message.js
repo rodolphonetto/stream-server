@@ -20,3 +20,5 @@ const addMessage = (req, res) => {
 router.post("/add-message", (req, res) => {
   addMessage(req, res);
 });
+
+module.exports = router;
