@@ -14,13 +14,6 @@ mongoose
   .then(console.log('MongoDB conectado'))
   .catch(err => console.log(err))
 
-// Abertura do socket
-io.on('connection', socket => {
-  socket.on('mensagem', msg => {
-    io.emit('mensagem', msg)
-  })
-})
-
 // CORS
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -38,6 +31,14 @@ app.use(bodyParser.json())
 
 // rota das Mensagens
 app.use('/messages', message)
+
+// Abertura do socket
+io.on('connection', socket => {
+  socket.on('mensagem', msg => {
+    io.emit('mensagem', msg)
+    console.log(msg)
+  })
+})
 
 // abertura servidor
 http.listen(4000, () => {
