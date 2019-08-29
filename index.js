@@ -1,12 +1,11 @@
 const express = require('express')
-const app = express()
-const http = require('http').createServer(app)
-
 const mongoose = require('mongoose')
-const io = require('socket.io')(http)
 const bodyParser = require('body-parser')
-const message = require('./routes/message/message')
+
+const messageRoutes = require('./routes/message')
 const db = require('./config/keys').mongoURI
+
+const app = express()
 
 // conexão banco
 mongoose
@@ -30,17 +29,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // rota das Mensagens
-app.use('/messages', message)
-
-// Abertura do socket
-io.on('connection', socket => {
-  socket.on('mensagem', msg => {
-    io.emit('mensagem', msg)
-    console.log(msg)
-  })
-})
+app.use('/messages', messageRoutes)
 
 // abertura servidor
-http.listen(4000, () => {
-  console.log('listening on port 4000')
+const server = app.listen(4000)
+// Inicialização do socket
+const io = require('./socket').init(server)
+io.on('connect', socket => {
+  console.log('User Connected')
 })
